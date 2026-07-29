@@ -27,55 +27,89 @@ interface Experience {
     <div [class.dark]="isDarkMode" class="min-h-screen bg-slate-900 text-slate-100 font-sans transition-colors duration-300">
       
       <!-- Top Navigation -->
-      <nav class="sticky top-0 z-50 backdrop-blur-md bg-slate-900/80 border-b border-slate-800 px-6 py-4 flex justify-between items-center max-w-6xl mx-auto">
-        <a href="#" class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-          Ranjan Khatiwada
-        </a>
-        <div class="flex items-center gap-6 text-sm font-medium">
-          <a href="#about" class="hover:text-cyan-400 transition">About</a>
-          <a href="#skills" class="hover:text-cyan-400 transition">Skills</a>
-          <a href="#experience" class="hover:text-cyan-400 transition">Experience</a>
-          <a href="#projects" class="hover:text-cyan-400 transition">Projects</a>
-          <a href="#education" class="hover:text-cyan-400 transition">Education</a>
-          <button (click)="copyEmail()" class="bg-cyan-500 hover:bg-cyan-600 text-slate-950 font-semibold px-4 py-2 rounded-lg transition shadow-md shadow-cyan-500/20">
-            {{ copied ? '✓ Copied!' : 'Contact Me' }}
-          </button>
+      <nav class="sticky top-0 z-50 backdrop-blur-md bg-slate-900/90 border-b border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex justify-between items-center">
+          <!-- Brand Logo/Name -->
+          <a href="#" (click)="closeMobileMenu()" class="text-lg sm:text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            Ranjan Khatiwada
+          </a>
+
+          <!-- Desktop Navigation Links -->
+          <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+            <a href="#about" class="hover:text-cyan-400 transition">About</a>
+            <a href="#skills" class="hover:text-cyan-400 transition">Skills</a>
+            <a href="#experience" class="hover:text-cyan-400 transition">Experience</a>
+            <a href="#projects" class="hover:text-cyan-400 transition">Projects</a>
+            <a href="#education" class="hover:text-cyan-400 transition">Education</a>
+            <button (click)="copyEmail()" class="bg-cyan-500 hover:bg-cyan-600 text-slate-950 font-semibold px-4 py-2 rounded-lg transition shadow-md shadow-cyan-500/20">
+              {{ copied ? '✓ Copied!' : 'Contact Me' }}
+            </button>
+          </div>
+
+          <!-- Mobile Controls (Contact + Hamburger Icon) -->
+          <div class="flex items-center gap-2 md:hidden">
+            <button (click)="copyEmail()" class="bg-cyan-500 hover:bg-cyan-600 text-slate-950 font-semibold text-xs px-3 py-1.5 rounded-lg transition">
+              {{ copied ? '✓ Copied' : 'Contact' }}
+            </button>
+            <button 
+              (click)="toggleMobileMenu()" 
+              aria-label="Toggle Navigation Menu" 
+              class="p-2 text-slate-300 hover:text-white rounded-lg border border-slate-800 bg-slate-800/50 focus:outline-none">
+              <!-- Hamburger Icon (Show when closed) -->
+              <svg *ngIf="!isMobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+              <!-- Close (X) Icon (Show when open) -->
+              <svg *ngIf="isMobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div *ngIf="isMobileMenuOpen" class="md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-2 pb-6 space-y-3">
+          <a href="#about" (click)="closeMobileMenu()" class="block py-2.5 text-slate-200 hover:text-cyan-400 font-medium border-b border-slate-800/80">About</a>
+          <a href="#skills" (click)="closeMobileMenu()" class="block py-2.5 text-slate-200 hover:text-cyan-400 font-medium border-b border-slate-800/80">Skills</a>
+          <a href="#experience" (click)="closeMobileMenu()" class="block py-2.5 text-slate-200 hover:text-cyan-400 font-medium border-b border-slate-800/80">Experience</a>
+          <a href="#projects" (click)="closeMobileMenu()" class="block py-2.5 text-slate-200 hover:text-cyan-400 font-medium border-b border-slate-800/80">Projects</a>
+          <a href="#education" (click)="closeMobileMenu()" class="block py-2.5 text-slate-200 hover:text-cyan-400 font-medium">Education</a>
         </div>
       </nav>
 
       <!-- Hero Section -->
-      <header id="about" class="max-w-6xl mx-auto px-6 py-20 flex flex-col md:flex-row items-center justify-between gap-12">
-        <div class="space-y-6 max-w-2xl">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-sm font-medium">
+      <header id="about" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
+        <div class="space-y-4 sm:space-y-6 max-w-2xl text-left">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs sm:text-sm font-medium">
             <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
             Open to Work in Canada (Open Work Permit)
           </div>
-          <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight">
+          <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight">
             Full-Stack Software Engineer
           </h1>
-          <p class="text-slate-400 text-lg leading-relaxed">
+          <p class="text-slate-400 text-base sm:text-lg leading-relaxed">
             4+ years of engineering scalable, multi-tier microservices and high-performance applications using <span class="text-cyan-400 font-semibold">C#, .NET Core, Angular, SQL Server, and Azure</span> across Healthcare, Fintech, and E-commerce.
           </p>
-          <div class="flex flex-wrap items-center gap-4 pt-2">
-            <a href="https://linkedin.com/in/ranjan-khatiwada" target="_blank" class="px-5 py-2.5 rounded-lg border border-slate-700 hover:border-cyan-400 hover:text-cyan-400 transition font-medium flex items-center gap-2">
-              LinkedIn
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-2">
+            <a href="https://linkedin.com/in/ranjan-khatiwada" target="_blank" class="px-5 py-2.5 rounded-lg border border-slate-700 hover:border-cyan-400 hover:text-cyan-400 transition font-medium flex items-center justify-center gap-2 text-center">
+              LinkedIn ↗
             </a>
-            <a href="https://github.com/ranjan010" target="_blank" class="px-5 py-2.5 rounded-lg border border-slate-700 hover:border-cyan-400 hover:text-cyan-400 transition font-medium flex items-center gap-2">
-              GitHub
+            <a href="https://github.com/ranjan010" target="_blank" class="px-5 py-2.5 rounded-lg border border-slate-700 hover:border-cyan-400 hover:text-cyan-400 transition font-medium flex items-center justify-center gap-2 text-center">
+              GitHub ↗
             </a>
-            <span class="text-slate-500">📍 Brampton, ON, Canada</span>
+            <span class="text-slate-500 text-sm text-center sm:text-left py-1">📍 Brampton, ON, Canada</span>
           </div>
         </div>
       </header>
 
-      <!-- Interactive Skills Section -->
-      <section id="skills" class="max-w-6xl mx-auto px-6 py-16 border-t border-slate-800">
-        <h2 class="text-2xl font-bold mb-8 flex items-center gap-3">
+      <!-- Skills Section -->
+      <section id="skills" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 border-t border-slate-800">
+        <h2 class="text-2xl font-bold mb-6 sm:mb-8 flex items-center gap-2">
           <span class="text-cyan-400">#</span> Core Technical Stack
         </h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="p-6 bg-slate-800/50 rounded-xl border border-slate-700/50 hover:border-cyan-500/50 transition">
-            <h3 class="text-cyan-400 font-semibold text-lg mb-4">Backend & Architecture</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+          <div class="p-5 sm:p-6 bg-slate-800/50 rounded-xl border border-slate-700/50">
+            <h3 class="text-cyan-400 font-semibold text-base sm:text-lg mb-3 sm:mb-4">Backend & Architecture</h3>
             <ul class="space-y-2 text-slate-300 text-sm">
               <li *ngFor="let s of backendSkills" class="flex items-center gap-2">
                 <span class="text-cyan-400">▹</span> {{ s }}
@@ -83,8 +117,8 @@ interface Experience {
             </ul>
           </div>
 
-          <div class="p-6 bg-slate-800/50 rounded-xl border border-slate-700/50 hover:border-cyan-500/50 transition">
-            <h3 class="text-cyan-400 font-semibold text-lg mb-4">Frontend & UI</h3>
+          <div class="p-5 sm:p-6 bg-slate-800/50 rounded-xl border border-slate-700/50">
+            <h3 class="text-cyan-400 font-semibold text-base sm:text-lg mb-3 sm:mb-4">Frontend & UI</h3>
             <ul class="space-y-2 text-slate-300 text-sm">
               <li *ngFor="let s of frontendSkills" class="flex items-center gap-2">
                 <span class="text-cyan-400">▹</span> {{ s }}
@@ -92,8 +126,8 @@ interface Experience {
             </ul>
           </div>
 
-          <div class="p-6 bg-slate-800/50 rounded-xl border border-slate-700/50 hover:border-cyan-500/50 transition">
-            <h3 class="text-cyan-400 font-semibold text-lg mb-4">Cloud, DevOps & Databases</h3>
+          <div class="p-5 sm:p-6 bg-slate-800/50 rounded-xl border border-slate-700/50">
+            <h3 class="text-cyan-400 font-semibold text-base sm:text-lg mb-3 sm:mb-4">Cloud, DevOps & DBs</h3>
             <ul class="space-y-2 text-slate-300 text-sm">
               <li *ngFor="let s of devopsSkills" class="flex items-center gap-2">
                 <span class="text-cyan-400">▹</span> {{ s }}
@@ -103,49 +137,49 @@ interface Experience {
         </div>
       </section>
 
-      <!-- Interactive Work Experience Tabs -->
-      <section id="experience" class="max-w-6xl mx-auto px-6 py-16 border-t border-slate-800">
-        <h2 class="text-2xl font-bold mb-8 flex items-center gap-3">
+      <!-- Work Experience Section -->
+      <section id="experience" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 border-t border-slate-800">
+        <h2 class="text-2xl font-bold mb-6 sm:mb-8 flex items-center gap-2">
           <span class="text-cyan-400">#</span> Professional Experience
         </h2>
         
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <!-- Sidebar Tabs -->
-          <div class="flex md:flex-col overflow-x-auto gap-2">
+          <!-- Responsive Horizontal Touch-Scroll Tabs on Mobile -->
+          <div class="flex md:flex-col overflow-x-auto gap-2 pb-2 md:pb-0 scrollbar-none">
             <button 
               *ngFor="let exp of experiences; let i = index"
               (click)="selectedExpIndex = i"
               [class.border-cyan-400]="selectedExpIndex === i"
               [class.bg-slate-800]="selectedExpIndex === i"
               [class.text-cyan-400]="selectedExpIndex === i"
-              class="px-4 py-3 text-left border-l-2 border-slate-700 hover:bg-slate-800/50 text-slate-400 transition font-medium whitespace-nowrap rounded-r-lg">
+              class="px-4 py-2.5 sm:py-3 text-left border-b-2 md:border-b-0 md:border-l-2 border-slate-700 hover:bg-slate-800/50 text-slate-400 transition font-medium whitespace-nowrap rounded-t-lg md:rounded-t-none md:rounded-r-lg text-sm">
               {{ exp.company }}
             </button>
           </div>
 
-          <!-- Active Experience Content -->
-          <div class="md:col-span-3 bg-slate-800/30 p-6 rounded-xl border border-slate-700/50 space-y-4">
-            <div class="flex justify-between items-start flex-wrap gap-2">
+          <!-- Active Experience Details -->
+          <div class="md:col-span-3 bg-slate-800/30 p-4 sm:p-6 rounded-xl border border-slate-700/50 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
               <div>
-              <h3 class="text-xl font-bold text-slate-100">
-  {{ activeExp.role }} <span class="text-cyan-400">&#64; {{ activeExp.company }}</span>
-</h3>
-                <p class="text-slate-400 text-sm font-medium">{{ activeExp.domain }} | {{ activeExp.location }}</p>
+                <h3 class="text-lg sm:text-xl font-bold text-slate-100">
+                  {{ activeExp.role }} <span class="text-cyan-400">&#64; {{ activeExp.company }}</span>
+                </h3>
+                <p class="text-slate-400 text-xs sm:text-sm font-medium mt-0.5">{{ activeExp.domain }} | {{ activeExp.location }}</p>
               </div>
-              <span class="px-3 py-1 bg-slate-800 text-cyan-400 rounded-md text-xs font-mono">
+              <span class="self-start sm:self-auto px-2.5 py-1 bg-slate-800 text-cyan-400 rounded text-xs font-mono">
                 {{ activeExp.period }}
               </span>
             </div>
 
-            <ul class="space-y-3 pt-2 text-slate-300 text-sm leading-relaxed">
-              <li *ngFor="let highlight of activeExp.highlights" class="flex items-start gap-3">
-                <span class="text-cyan-400 mt-1">▹</span>
+            <ul class="space-y-2.5 pt-1 text-slate-300 text-sm leading-relaxed">
+              <li *ngFor="let highlight of activeExp.highlights" class="flex items-start gap-2.5">
+                <span class="text-cyan-400 mt-1 flex-shrink-0">▹</span>
                 <span>{{ highlight }}</span>
               </li>
             </ul>
 
-            <div class="flex flex-wrap gap-2 pt-4">
-              <span *ngFor="let skill of activeExp.skills" class="px-2.5 py-1 bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs rounded-full">
+            <div class="flex flex-wrap gap-1.5 sm:gap-2 pt-3">
+              <span *ngFor="let skill of activeExp.skills" class="px-2.5 py-0.5 bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs rounded-full">
                 {{ skill }}
               </span>
             </div>
@@ -153,38 +187,38 @@ interface Experience {
         </div>
       </section>
 
-      <!-- Interactive Projects Section -->
-      <section id="projects" class="max-w-6xl mx-auto px-6 py-16 border-t border-slate-800">
-        <div class="flex justify-between items-center mb-8">
-          <h2 class="text-2xl font-bold flex items-center gap-3">
+      <!-- Projects Section -->
+      <section id="projects" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 border-t border-slate-800">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
+          <h2 class="text-2xl font-bold flex items-center gap-2">
             <span class="text-cyan-400">#</span> Featured Projects
           </h2>
-          <!-- Filter Buttons -->
-          <div class="flex gap-2 bg-slate-800/80 p-1 rounded-lg border border-slate-700 text-xs">
+          <!-- Mobile Touch-friendly Filter Buttons -->
+          <div class="flex gap-1.5 bg-slate-800/80 p-1 rounded-lg border border-slate-700 text-xs self-start sm:self-auto">
             <button 
               *ngFor="let cat of projectCategories"
               (click)="activeCategory = cat"
               [class.bg-cyan-500]="activeCategory === cat"
               [class.text-slate-950]="activeCategory === cat"
-              class="px-3 py-1.5 rounded-md transition font-semibold">
+              class="px-3 py-1.5 rounded transition font-semibold">
               {{ cat }}
             </button>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           <div 
             *ngFor="let p of filteredProjects" 
-            class="p-6 bg-slate-800/40 rounded-xl border border-slate-700/60 hover:border-cyan-400 transition flex flex-col justify-between space-y-4">
+            class="p-5 sm:p-6 bg-slate-800/40 rounded-xl border border-slate-700/60 hover:border-cyan-400 transition flex flex-col justify-between space-y-4">
             <div>
-              <div class="flex justify-between items-center mb-2">
-                <h3 class="text-xl font-bold text-slate-100">{{ p.title }}</h3>
-                <a [href]="p.githubUrl" target="_blank" class="text-slate-400 hover:text-cyan-400 text-sm font-mono">GitHub ↗</a>
+              <div class="flex justify-between items-center mb-2 gap-2">
+                <h3 class="text-lg sm:text-xl font-bold text-slate-100">{{ p.title }}</h3>
+                <a [href]="p.githubUrl" target="_blank" class="text-slate-400 hover:text-cyan-400 text-xs sm:text-sm font-mono flex-shrink-0">GitHub ↗</a>
               </div>
               <p class="text-slate-400 text-sm leading-relaxed">{{ p.description }}</p>
             </div>
 
-            <div class="flex flex-wrap gap-2 pt-2">
+            <div class="flex flex-wrap gap-1.5 pt-2">
               <span *ngFor="let t of p.tech" class="px-2 py-0.5 bg-slate-800 text-slate-300 border border-slate-700 rounded text-xs">
                 {{ t }}
               </span>
@@ -194,26 +228,26 @@ interface Experience {
       </section>
 
       <!-- Education Section -->
-      <section id="education" class="max-w-6xl mx-auto px-6 py-16 border-t border-slate-800">
-        <h2 class="text-2xl font-bold mb-8 flex items-center gap-3">
+      <section id="education" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 border-t border-slate-800">
+        <h2 class="text-2xl font-bold mb-6 sm:mb-8 flex items-center gap-2">
           <span class="text-cyan-400">#</span> Education
         </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="p-6 bg-slate-800/30 rounded-xl border border-slate-700/50">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+          <div class="p-5 sm:p-6 bg-slate-800/30 rounded-xl border border-slate-700/50">
             <span class="text-cyan-400 text-xs font-mono">2024 - 2025</span>
-            <h3 class="text-lg font-bold text-slate-100 mt-1">Post Graduate Certificate - Big Data Analytics, Machine Learning & AI</h3>
-            <p class="text-slate-400 text-sm">Lambton College — Mississauga, ON, Canada</p>
+            <h3 class="text-base sm:text-lg font-bold text-slate-100 mt-1">Post Graduate Certificate - Big Data Analytics, Machine Learning & AI</h3>
+            <p class="text-slate-400 text-xs sm:text-sm mt-1">Lambton College — Mississauga, ON, Canada</p>
           </div>
-          <div class="p-6 bg-slate-800/30 rounded-xl border border-slate-700/50">
+          <div class="p-5 sm:p-6 bg-slate-800/30 rounded-xl border border-slate-700/50">
             <span class="text-cyan-400 text-xs font-mono">2016 - 2020</span>
-            <h3 class="text-lg font-bold text-slate-100 mt-1">Bachelor of Computer Science & IT (B.Sc. CSIT)</h3>
-            <p class="text-slate-400 text-sm">Ambition College (Tribhuvan University) — Kathmandu, Nepal</p>
+            <h3 class="text-base sm:text-lg font-bold text-slate-100 mt-1">Bachelor of Computer Science & IT (B.Sc. CSIT)</h3>
+            <p class="text-slate-400 text-xs sm:text-sm mt-1">Ambition College (Tribhuvan University) — Kathmandu, Nepal</p>
           </div>
         </div>
       </section>
 
       <!-- Footer -->
-      <footer class="border-t border-slate-800 py-8 text-center text-slate-500 text-sm">
+      <footer class="border-t border-slate-800 py-8 text-center text-slate-500 text-xs sm:text-sm px-4">
         <p>© 2026 Ranjan Khatiwada. Built with Angular & Tailwind CSS.</p>
       </footer>
     </div>
@@ -222,10 +256,11 @@ interface Experience {
 export class AppComponent {
   isDarkMode = true;
   copied = false;
+  isMobileMenuOpen = false;
   selectedExpIndex = 0;
   activeCategory = 'All';
 
-  backendSkills = ['C# / .NET Core', 'ASP.NET Web API', 'RESTful Microservices', 'CQRS & MediatR', 'RabbitMQ & Event-Driven Architecture', 'Entity Framework Core & Dapper', 'SQL Server & PostgreSQL'];
+  backendSkills = ['C# / .NET Core', 'ASP.NET Web API', 'RESTful Microservices', 'CQRS & MediatR', 'RabbitMQ & Event Architecture', 'Entity Framework Core & Dapper', 'SQL Server & PostgreSQL'];
   frontendSkills = ['Angular & TypeScript', 'RxJS & NgRx State Management', 'HTML5 / CSS3 / JavaScript', 'Knockout.JS', 'Tailwind CSS'];
   devopsSkills = ['Azure (App Services, Functions)', 'Azure DevOps & CI/CD Pipelines', 'Docker Packaging', 'ELK Stack & Serilog Observability', 'Moq, NUnit & xUnit Testing'];
 
@@ -299,6 +334,14 @@ export class AppComponent {
   get filteredProjects(): Project[] {
     if (this.activeCategory === 'All') return this.projects;
     return this.projects.filter(p => p.category === this.activeCategory);
+  }
+
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  closeMobileMenu() {
+    this.isMobileMenuOpen = false;
   }
 
   copyEmail() {
